@@ -1,26 +1,30 @@
+from inventorytracker.api import errors
 from bson import ObjectId, json_util
 from inventorytracker import mongodb
 
 inventoryCollection = mongodb["Shopify"]["inventory"]
 
-ERROR = json_util.dumps({
-            "error": "Error connecting to database in inventoryController"
-        }), 500
+ERROR = errors.generalServerError("inventoryController")
 
 def _finalQtyGreaterThanZero(itemID, qtyAdjustment):
+    """
+    Helper function that verifies inventory quantities
+    """
     try:
         item = json_util.loads(getItemByID(itemID)[0])["item"]
-        currentItemQty = item["quantity"]
-        if currentItemQty + qtyAdjustment > 0:
+        currentItemQty = item.get("quantity")
+        if currentItemQty and currentItemQty + qtyAdjustment > 0:
             return True
     except:
-        return json_util.dumps({
-            "error": "Invalid request, itemID does not exist"
-        }), 400
+        return errors.invalidID(itemID)
 
 def getAllItems():
+    """
+    Gets all inventory items
+    """
     try:
-        itemList = [item for item in inventoryCollection.find()]
+        cursor = inventoryCollection.find()
+        itemList = [item for item in cursor]
         return json_util.dumps({
             "items": itemList,
             "count": len(itemList)
@@ -29,35 +33,40 @@ def getAllItems():
         return ERROR
 
 def addItem(itemData):
+    """
+    Adds an inventory item
+    """
     try:
-        name = itemData["name"]
-        quantity = itemData["quantity"]
-        cost = itemData["cost"]
-        price = itemData["price"]
-    except:
-        return json_util.dumps({
-            "error": "Invalid request, all data fields are required"
-        }), 400
-    try:
-        response = inventoryCollection.insert_one({
-            "name": name,
-            "quantity": quantity,
-            "cost": cost,
-            "price": price
-        })
-        if response.inserted_id:
-            return json_util.dumps({
-                "status": "Success",
-                "insertedItemID": response.inserted_id
-            }), 200
+        name = itemData.get("name")
+        quantity = itemData.get("quantity")
+        cost = itemData.get("cost")
+        price = itemData.get("price")
+        
+        if name and quantity and cost and price:
+            response = inventoryCollection.insert_one({
+                "name": name,
+                "quantity": quantity,
+                "cost": cost,
+                "price": price
+            })
+            if response.inserted_id:
+                return json_util.dumps({
+                    "status": "Success",
+                    "insertedItemID": response.inserted_id
+                }), 200
+            else:
+                return ERROR
         else:
-            return json_util.dumps({
-                "error": "Insertion error"
-            }), 500
+            return errors.missingRequiredDataFields(
+                "name", "quantity", "cost", "price"
+            )
     except:
         return ERROR
 
 def getItemByID(id):
+    """
+    Get a specific item
+    """
     try:
         item = inventoryCollection.find_one({"_id": ObjectId(id)})
         if item:
@@ -65,36 +74,55 @@ def getItemByID(id):
                 "item": item
             }), 200
         else:
-            return json_util.dumps({"error": "Invalid request, no \
-                matching ObjectID"
-            }), 400
+            return errors.invalidID(id)
     except:
         return ERROR
 
 def editItemByID(id, itemData):
+    """
+    Edits item details
+    """
     try:
-        if set(itemData.keys()).issubset(["name", "quantity", "cost", "price"]):
-            editedQty = itemData.get("quantity")
-            if editedQty and editedQty < 0:
-                return json_util.dumps({
-                    "error": "Invalid request, quantity must be greater than \
-                        or equal to zero"
-                }), 400
-            inventoryCollection.update_one(
+        jsonData = {}
+
+        name = itemData.get("name")
+        if name:
+            jsonData["name"] = name
+        quantity = itemData.get("quantity")
+        if quantity:
+            if quantity > 0:
+                jsonData["quantity"] = quantity
+            else:
+                return errors.quantityError()
+        cost = itemData.get("cost")
+        if cost:
+            jsonData["cost"] = cost
+        price = itemData.get("price")
+        if price:
+            jsonData["price"] = price
+
+        if jsonData:
+            response = inventoryCollection.update_one(
                 {"_id": ObjectId(id)},
-                {"$set": itemData}
+                {"$set": jsonData}
             )
-            return json_util.dumps({
-                "status": "Success"
-            }), 200
+            if response.matched_count == 1:
+                return json_util.dumps({
+                    "status": "Success"
+                }), 200
+            else:
+                return errors.invalidID(id)
         else:
-            return json_util.dumps({"error": "Invalid request, \
-                only name, quantity, cost, and price allowed"
-            }), 400
+            return errors.missingSubsetDataFields(
+                "name", "quantity", "cost", "price"
+            )
     except:
         return ERROR
 
 def editItemQuantityByID(id, qtyToAdjust):
+    """
+    Edits an items quantity
+    """
     try:
         if _finalQtyGreaterThanZero(id, qtyToAdjust):
             response = inventoryCollection.update_one(
@@ -106,18 +134,16 @@ def editItemQuantityByID(id, qtyToAdjust):
                     "status": "Success"
                 }), 200
             else:
-                return json_util.dumps({"error": "Invalid request, no \
-                    matching ObjectID"
-                }), 400
+                return errors.invalidID(id)
         else:
-            return json_util.dumps({
-                "error": "Invalid request, quantity must be greater than \
-                    or equal to zero"
-            }), 400
+            return errors.quantityError()
     except:
         return ERROR
 
 def deleteItemByID(id):
+    """
+    Deletes a specific item
+    """
     try:
         response = inventoryCollection.delete_one({"_id": ObjectId(id)})
         if response.deleted_count == 1:
@@ -125,7 +151,6 @@ def deleteItemByID(id):
                 "status": "Success"
             }), 200
         else:
-            return json_util.dumps({"error": "Deletion error"
-            }), 500
+            return ERROR
     except:
         return ERROR
