@@ -42,8 +42,8 @@ def inventoryItem(id):
             if data:
                 response, status = inventoryController.editItemByID(id, data)
             else:
-                response, status = errors.missingRequiredDataFields(
-                    "itemID", "quantity"
+                response, status = errors.missingSubsetDataFields(
+                    "name", "quantity", "cost", "price"
                 )
         elif request.method == "DELETE":
             response, status = inventoryController.deleteItemByID(id)

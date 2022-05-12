@@ -129,7 +129,11 @@ def editShipmentItem(id, data):
             elif status == 500:
                 return ERROR
             elif status == 400:
-                return errors.editShipmentItemIDError(id, itemID)
+                errorCode = response[0]["errorCode"]
+                if errorCode == 25:
+                    return errors.cycleItemQuantityError(id)
+                elif errorCode == 23:
+                    return errors.editShipmentItemIDError(id, itemID)
         else:
             return errors.missingRequiredDataFields("itemID", "quantity")
     except:

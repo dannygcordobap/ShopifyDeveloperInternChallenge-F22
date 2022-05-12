@@ -1,6 +1,7 @@
 from inventorytracker.api import errors
-from bson import ObjectId, json_util
+from bson import ObjectId, json_util, errors as bsonErrors
 from inventorytracker import mongodb
+from traceback import print_exc
 
 inventoryCollection = mongodb["Shopify"]["inventory"]
 
@@ -43,6 +44,8 @@ def addItem(itemData):
         price = itemData.get("price")
         
         if name and quantity and cost and price:
+            if quantity <= 0:
+                return errors.quantityError()
             response = inventoryCollection.insert_one({
                 "name": name,
                 "quantity": quantity,
@@ -75,6 +78,8 @@ def getItemByID(id):
             }), 200
         else:
             return errors.invalidID(id)
+    except bsonErrors.InvalidId:
+        return errors.invalidID(id)
     except:
         return ERROR
 

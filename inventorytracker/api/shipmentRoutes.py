@@ -33,7 +33,6 @@ def shipment(id = None):
         else:
             if request.method == "GET":
                 response, status = shipmentController.getAllShipments()
-            
             elif request.method == "POST":
                 data = request.get_json()
                 if data:

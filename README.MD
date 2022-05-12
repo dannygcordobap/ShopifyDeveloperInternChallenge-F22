@@ -343,3 +343,17 @@ curl -X DELETE http://127.0.0.1:5000/api/v1/shipment/627ac2ac05312ffd980d7ea5/it
 }
 ```
 **Note:** This will automatically add the quantity back into stock for each item in the shipment.
+
+---
+
+## *Error Codes*
+
+| Error Code | Description | Possible solution |
+| :---: | :--- | :--- |
+| 10 | General server error regarding a faulty database connection | N/A |
+| 20 | The requested _id does not belong to an existing resource | Verify the object id of the resource in question |
+| 21 | The request is missing required data fields. A list of the required data fields will be included in the response.| Include the required data fields |
+| 22 | The request does not include applicable data fields. A list of possible data fields will be included in the response | Include one or more of the applicable data fields |
+| 23 | The requested shipment does not exist or the item being edited is not in the shipment | Verify the shipment exists and that it contains the specified item |
+| 24 | Quantity values must be greater than 0 when passed in to a request | Verify quantity is greater than 0 |
+| 25 | Assigning quantity to shipment exceeds stock or the item is not in the shipment | Verify the shipment exists and that the requested quantity is in inventory |
