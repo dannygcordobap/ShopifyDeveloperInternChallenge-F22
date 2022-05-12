@@ -1,7 +1,7 @@
 # **Shopify Developer Internship Challenge**
 
 ## *Introduction*
----
+
 The Shopify Developer Internship Challenge is as follows:
 
 >Build an inventory tracking web application for a logistics company. We are looking for a web application that meets the requirements listed below, along with one additional feature, with the options also listed below. You can tackle this challenge using any technology you want. This is an open-ended task, but we want to focus on high quality back-end code.
@@ -21,7 +21,7 @@ I selected and implemented the "create shipments" functionality. This project wa
 
 
 ## *Getting Started*
----
+
 The API is written in Python 3 and uses the following dependencies:
 - flask
 - pymongo
@@ -36,7 +36,7 @@ If you would like to run the API locally, you can clone this repository to your 
 3. To run the API simply run the following command: `pipenv run server.py`. Following the command completion, navigate to http://127.0.0.1:5000 in a web browser and you should see "Shopify Developer Internship Challenge API V1" as plain text in the browser.
 
 ## *Making Requests*
----
+
 ### *Request Headers*
 The API only accepts JSON data. As a result, API requests will require the `Content-Type` header to be set to `application/json`. The following is an example curl request:
 ```
@@ -56,7 +56,7 @@ curl -X POST http://127.0.0.1:5000/api/v1/inventory
 
 ## *Request Examples* 
 
----
+
 
 ### **Get inventory items**
 ```
@@ -347,6 +347,8 @@ curl -X DELETE http://127.0.0.1:5000/api/v1/shipment/627ac2ac05312ffd980d7ea5/it
 ---
 
 ## *Error Codes*
+
+The following table provides an overview of the error codes you may encounter, and possible fixes, while making requests to the API.
 
 | Error Code | Description | Possible solution |
 | :---: | :--- | :--- |
