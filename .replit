@@ -1,2 +1,2 @@
 language = "bash"
-run = "pip install pipenv & pipenv install & pipenv run python server.py"
+run = "pip install pipenv; pipenv install; pipenv run python server.py"
