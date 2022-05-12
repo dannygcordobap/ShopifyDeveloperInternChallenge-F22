@@ -22,6 +22,8 @@ I selected and implemented the "create shipments" functionality. This project wa
 
 ## *Getting Started*
 
+### **Local Machine**
+
 The API is written in Python 3 and uses the following dependencies:
 - flask
 - pymongo
@@ -34,6 +36,21 @@ If you would like to run the API locally, you can clone this repository to your 
 2. Next you will need to download dependencies using pipenv. Pipenv can be installed using `pip install --user pipenv`. After pipenv is installed, change directories to the local project directory and run `pipenv install`.
 
 3. To run the API simply run the following command: `pipenv run server.py`. Following the command completion, navigate to http://127.0.0.1:5000 in a web browser and you should see "Shopify Developer Internship Challenge API V1" as plain text in the browser.
+
+### **Replit**
+
+Navigate to the project repl at https://replit.com/@dannygcordobap/ShopifyDeveloperInternChallenge-F22#.replit. Here you can view the source code and run the project locally. To run the project simply click the run button. This process may take a minute or two as all the dependencies need to be installed. Once the output below appears in the repl, the process is complete and the API is available at http://127.0.0.1:5000.
+```
+ * Serving Flask app 'inventorytracker' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000 (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 439-866-122
+```
 
 ## *Making Requests*
 
@@ -359,3 +376,7 @@ The following table provides an overview of the error codes you may encounter, a
 | 23 | The requested shipment does not exist or the item being edited is not in the shipment | Verify the shipment exists and that it contains the specified item |
 | 24 | Quantity values must be greater than 0 when passed in to a request | Verify quantity is greater than 0 |
 | 25 | Assigning quantity to shipment exceeds stock or the item is not in the shipment | Verify the shipment exists and that the requested quantity is in inventory |
+
+## *Contact Me*
+
+If there are any questions, suggestions, or feedback I can be reached by email at dannygcordobap@gmail.com.

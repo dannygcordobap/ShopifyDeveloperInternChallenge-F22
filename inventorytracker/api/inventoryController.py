@@ -39,7 +39,7 @@ def addItem(itemData):
     """
     try:
         name = itemData.get("name")
-        quantity = itemData.get("quantity")
+        quantity = itemData.get("quantity") # Verify data type?
         cost = itemData.get("cost")
         price = itemData.get("price")
         
