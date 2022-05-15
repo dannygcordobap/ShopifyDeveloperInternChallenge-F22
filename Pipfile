@@ -8,8 +8,6 @@ flask = "*"
 pymongo = {extras = ["srv"], version = "*"}
 requests = "*"
 python-dotenv = "*"
+certifi = "*"
 
 [dev-packages]
-
-[requires]
-python_version = "3.10"

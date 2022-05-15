@@ -17,7 +17,7 @@ After completing the requirements, the challenge calls for one additional featur
 - Ability to create warehouses/locations and assign inventory to specific locations
 - Ability to create “shipments” and assign inventory to the shipment, and adjust inventory appropriately
 
-I selected and implemented the "create shipments" functionality. This project was completed in as a Python Flask web application using Python 3 and the Flask web framework.
+I selected and implemented the “create shipments” functionality. This project was completed as a Python Flask web application using Python 3 and the Flask web framework.
 
 
 ## *Getting Started*
@@ -29,19 +29,22 @@ The API is written in Python 3 and uses the following dependencies:
 - pymongo
 - python-dotenv
 
-If you would like to run the API locally, you can clone this repository to your local machine and then do the following:
-1. Ensure you have a download of Python 3.x.x. This can be checked by running the following command in the command: 
-    ```python --version```
+If you would like to run the API locally, do the following:
 
-2. Next you will need to download dependencies using pipenv. Pipenv can be installed using `pip install --user pipenv`. After pipenv is installed, change directories to the local project directory and run `pipenv install`.
+1. Ensure you have a download of Python 3.x.x. You can check your python version by running the following command in the command: 
+    `python --version`
 
-3. To run the API simply run the following command: `pipenv run server.py`. Following the command completion, navigate to http://127.0.0.1:5000 in a web browser and you should see "Shopify Developer Internship Challenge API V1" as plain text in the browser.
+2. Clone the github project repository with the following command: `git clone https://github.com/dannygcordobap/ShopifyDeveloperInternChallenge-F22.git`. This will install the repository under in a directory titled `ShopifyDeveloperInternChallenge-F22`. 
+
+3. Next, you will need to download dependencies using pipenv. You can install pipenv using the following command: `pip install --user pipenv`. After installing pipenv, change directories to the local project directory using `cd path\to\project` and run `pipenv install` to install all project dependencies.
+
+4. To run the API, simply run the following command: `pipenv run python server.py`. Following the command completion, navigate to http://127.0.0.1:5000 in a web browser, and you should see `Shopify Developer Internship Challenge API V1` as plain text in the browser.
 
 ### **Replit**
 
-Navigate to the project repl at https://replit.com/@dannygcordobap/ShopifyDeveloperInternChallenge-F22#.replit. Here you can view the source code and run the project locally. To run the project simply click the run button. This process may take a minute or two as all the dependencies need to be installed. Once the output below appears in the repl, the process is complete and the API is available at http://127.0.0.1:5000.
+Navigate to the project repl at https://replit.com/@dannygcordobap/ShopifyDeveloperInternChallenge-F22#.replit. Here you can view the source code and run the project. To run the project, click the run button. This process may take a minute or two. Once the output below appears in the repl, the process is complete, and the API is available at http://127.0.0.1:5000.
 ```
- * Serving Flask app 'inventorytracker' (lazy loading)
+ * Serving Flask app ‘inventorytracker’ (lazy loading)
  * Environment: production
    WARNING: This is a development server. Do not use it in a production deployment.
    Use a production WSGI server instead.
@@ -55,7 +58,7 @@ Navigate to the project repl at https://replit.com/@dannygcordobap/ShopifyDevelo
 ## *Making Requests*
 
 ### *Request Headers*
-The API only accepts JSON data. As a result, API requests will require the `Content-Type` header to be set to `application/json`. The following is an example curl request:
+The API only accepts JSON data. As a result, API requests require the `Content-Type` header to be `application/json`. The following is an example curl request:
 ```
 curl -X POST http://127.0.0.1:5000/api/v1/inventory 
     -H Content-Type: application/json 
@@ -156,7 +159,7 @@ curl -X POST http://127.0.0.1:5000/api/v1/inventory
     "insertedItemID": {
         "$oid": "627abfd658d7c8efe48b90ea"
     },
-    "status": "Success"
+    “status”: “Success”
 }
 ```
 **Note:** All fields are required.
@@ -193,7 +196,7 @@ curl -X PUT http://127.0.0.1:5000/api/v1/inventory/627abfd658d7c8efe48b90ea
 **Response:**
 ```
 {
-    "status": "Success"
+    “status”: “Success”
 }
 ```
 **Note:** You can change all of the item attributes or any subset of the item attributes. The attributes are `name`, `cost`, `price`, and `quantity`.
@@ -207,7 +210,7 @@ curl -X DELETE http://127.0.0.1:5000/api/v1/inventory/627abfd658d7c8efe48b90ea
 **Response:**
 ```
 {
-    "status": "Success"
+    “status”: “Success”
 }
 ```
 
@@ -238,7 +241,7 @@ curl http://127.0.0.1:5000/api/v1/shipment
             "orderDate": {
                 "$date": "2022-05-10T15:53:16.438Z"
             },
-            "recipient": "Joe Schmoe"
+            “recipient”: “Joe Schmoe”
         }
     ]
 }
@@ -258,7 +261,7 @@ curl -X POST http://127.0.0.1:5000/api/v1/shipment
     "insertedShipmentID": {
         "$oid": "627ac49092d0028a9056466b"
     },
-    "status": "Success"
+    “status”: “Success”
 }
 ```
 **Note:** Recipient is required.
@@ -281,7 +284,7 @@ curl http://127.0.0.1:5000/api/v1/shipment/627ac49092d0028a9056466b
         "orderDate": {
             "$date": "2022-05-10T16:01:20.813Z"
         },
-        "recipient": "Whoever is reviewing this"
+        “recipient”: “Whoever is reviewing this”
     }
 }
 ```
@@ -297,7 +300,7 @@ curl -X PUT http://127.0.0.1:5000/api/v1/shipment/627ac49092d0028a9056466b
 **Response:**
 ```
 {
-    "status": "Success"
+    “status”: “Success”
 }
 ```
 
@@ -310,7 +313,7 @@ curl -X DELETE http://127.0.0.1:5000/api/v1/shipment/627ac49092d0028a9056466b
 **Response:**
 ```
 {
-    "status": "Success"
+    “status”: “Success”
 }
 ```
 **Note:** This will automatically add the quantities back into stock for each item in the shipment.
@@ -326,7 +329,7 @@ curl -X POST http://127.0.0.1:5000/api/v1/shipment/627ac2ac05312ffd980d7ea5/item
 **Response:**
 ```
 {
-    "status": "Success"
+    “status”: “Success”
 }
 ```
 **Note:** This will automatically adjust stock.
@@ -342,7 +345,7 @@ curl -X PUT http://127.0.0.1:5000/api/v1/shipment/627ac2ac05312ffd980d7ea5/items
 **Response:**
 ```
 {
-    "status": "Success"
+    “status”: “Success”
 }
 ```
 **Note:** This will automatically adjust stock to account for the item quantity changing in the shipment.
@@ -356,7 +359,7 @@ curl -X DELETE http://127.0.0.1:5000/api/v1/shipment/627ac2ac05312ffd980d7ea5/it
 **Response:**
 ```
 {
-    "status": "Success"
+    “status”: “Success”
 }
 ```
 **Note:** This will automatically add the quantity back into stock for each item in the shipment.
@@ -365,18 +368,18 @@ curl -X DELETE http://127.0.0.1:5000/api/v1/shipment/627ac2ac05312ffd980d7ea5/it
 
 ## *Error Codes*
 
-The following table provides an overview of the error codes you may encounter, and possible fixes, while making requests to the API.
+The following table provides an overview of the error codes you may encounter and possible fixes while making API requests.
 
 | Error Code | Description | Possible solution |
 | :---: | :--- | :--- |
 | 10 | General server error regarding a faulty database connection | N/A |
 | 20 | The requested _id does not belong to an existing resource | Verify the object id of the resource in question |
-| 21 | The request is missing required data fields. A list of the required data fields will be included in the response.| Include the required data fields |
-| 22 | The request does not include applicable data fields. A list of possible data fields will be included in the response | Include one or more of the applicable data fields |
-| 23 | The requested shipment does not exist or the item being edited is not in the shipment | Verify the shipment exists and that it contains the specified item |
-| 24 | Quantity values must be greater than 0 when passed in to a request | Verify quantity is greater than 0 |
-| 25 | Assigning quantity to shipment exceeds stock or the item is not in the shipment | Verify the shipment exists and that the requested quantity is in inventory |
+| 21 | The request is missing the required data fields. The response will include a list of the required data fields. | Include the required data fields |
+| 22 | The request does not include the required data fields. A list of possible data fields will be included in the response | Include one or more of the required data fields |
+| 23 | The requested shipment does not exist, or the edited item is not in the shipment | Verify that the shipment exists and that it contains the specified item |
+| 24 | Quantity values must be greater than 0 when passed into a request | Verify quantity is greater than 0 |
+| 25 | Assigning quantity to the shipment that exceeds stock or the item is not in the shipment | Verify the shipment exists and that the requested quantity is in inventory |
 
 ## *Contact Me*
 
-If there are any questions, suggestions, or feedback I can be reached by email at dannygcordobap@gmail.com.
+If you have any questions, suggestions, or feedback, you can reach me via email at dannygcordobap@gmail.com.
