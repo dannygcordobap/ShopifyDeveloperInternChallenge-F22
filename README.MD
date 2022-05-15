@@ -42,7 +42,9 @@ If you would like to run the API locally, do the following:
 
 ### **Replit**
 
-Navigate to the project repl at https://replit.com/@dannygcordobap/ShopifyDeveloperInternChallenge-F22#.replit. Here you can view the source code and run the project. To run the project, click the run button. This process may take a minute or two. Once the output below appears in the repl, the process is complete, and the API is available at http://127.0.0.1:5000.
+1. Navigate to the project repl at https://replit.com/@dannygcordobap/ShopifyDeveloperInternChallenge-F22#.replit. Here you can view the source code and run the project. 
+
+2. Run the project by clicking the run button. This process take take a minute or two while all dependencies are installed. Once the output below appears in the repl, the process is complete.
 ```
  * Serving Flask app ‘inventorytracker’ (lazy loading)
  * Environment: production
@@ -54,6 +56,7 @@ Navigate to the project repl at https://replit.com/@dannygcordobap/ShopifyDevelo
  * Debugger is active!
  * Debugger PIN: 439-866-122
 ```
+3. The API will now be available at https://ShopifyDeveloperInternChallenge-F22.dannygcordobap.repl.co! At this url you should now see the following plain text in your browser: `Shopify Developer Internship Challenge API V1`. You are now ready to begin making requests to the API.
 
 ## *Making Requests*
 
